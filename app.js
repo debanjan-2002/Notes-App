@@ -7,9 +7,9 @@ const session = require("express-session");
 const flash = require("connect-flash");
 
 const ExpressError = require("./utils/ExpressError");
-const catchAsync = require("./utils/catchAsync");
 
 const userRoutes = require("./routes/user");
+const noteRoutes = require("./routes/note");
 
 const app = express();
 
@@ -17,10 +17,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 const User = require("./models/users");
-const Note = require("./models/notes");
-
-const { isLoggedIn } = require("./middleware");
-const { response } = require("express");
 
 mongoose
     .connect("mongodb://localhost:27017/notes-app")
@@ -32,6 +28,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.engine("ejs", engine);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 const sessionConfig = {
     secret: "thisisnotasecret",
@@ -63,50 +60,12 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/", async (req, res) => {
-    // const note = new Note({
-    //     text: "Test Note",
-    //     title: "Body of note"
-    // });
-    // await note.save();
+app.get("/", (req, res) => {
     res.render("home");
-    // res.send("Home Page!");
 });
 
 app.use("/", userRoutes);
-
-app.get(
-    "/:userId/notes",
-    isLoggedIn,
-    catchAsync(async (req, res) => {
-        const { userId } = req.params;
-        if (mongoose.Types.ObjectId.isValid(userId)) {
-            const user = await User.findById(userId).populate("notes");
-            res.render("notes/show", { user });
-        } else {
-            req.logout(err => {
-                req.flash("error", "Invalid user ID");
-                res.redirect("/login");
-            });
-        }
-    })
-);
-
-app.post("/:userId/notes", async (req, res) => {
-    const { userId } = req.params;
-    const user = await User.findById(userId);
-    const note = new Note(req.body.notes);
-
-    user.notes.push(note);
-    await user.save();
-    await note.save();
-    res.redirect(`/${userId}/notes`);
-});
-
-app.get("/:userId/notes/new", isLoggedIn, (req, res) => {
-    const { userId } = req.params;
-    res.render("notes/new", { userId });
-});
+app.use("/:userId/notes", noteRoutes);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page not found!", 404));
