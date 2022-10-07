@@ -4,11 +4,11 @@
 <div class="row justify-content-center gy-3 gx-3">
     <% for(let note of user.notes) { %>
         <div class="col-auto">
-            <div class="card" style="min-width: 18rem; min-height: 18rem;">
+            <div class="card" style="width: 18rem; min-height: 15rem;">
                 <div class="card-body">
                   <h5 class="card-title"><%= note.title %> </h5>
                   <h6 class="card-subtitle mb-2 text-muted"><%= note.lastModified %> </h6>
-                  <p class="card-text" style="white-space: pre;"><%= note.text %></p>
+                  <p class="card-text" style="white-space: pre-line"><%= note.text %></p>
                   <!-- <a href="#" class="card-link btn btn-warning">Edit</a>
                   <a href="#" class="card-link btn btn-danger">Delete</a> -->
                 </div>
