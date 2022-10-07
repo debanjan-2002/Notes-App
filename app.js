@@ -67,6 +67,10 @@ app.get("/", (req, res) => {
 app.use("/", userRoutes);
 app.use("/:userId/notes", noteRoutes);
 
+app.get("/:userId/notes/:noteId/edit", (req, res) => {
+    res.send("Edit Page!");
+});
+
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page not found!", 404));
 });
