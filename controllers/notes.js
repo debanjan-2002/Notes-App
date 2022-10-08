@@ -7,7 +7,7 @@ module.exports.getNotes = async (req, res) => {
     const { userId } = req.params;
     if (mongoose.Types.ObjectId.isValid(userId)) {
         const user = await User.findById(userId).populate("notes");
-        res.render("notes/show", { user });
+        res.render("notes/show", { user, userId });
     } else {
         req.logout(err => {
             req.flash("error", "Invalid user ID");
@@ -45,5 +45,15 @@ module.exports.updateForm = async (req, res) => {
         { ...req.body.notes },
         { runValidators: true, new: true }
     );
+    res.redirect(`/${userId}/notes`);
+};
+
+module.exports.deleteNote = async (req, res) => {
+    const { noteId, userId } = req.params;
+    await User.findByIdAndUpdate(userId, {
+        $pull: { notes: noteId }
+    });
+    await Note.findByIdAndDelete(noteId);
+    req.flash("success", "Note deleted successfully!");
     res.redirect(`/${userId}/notes`);
 };
