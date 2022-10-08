@@ -25,7 +25,7 @@ module.exports.isNoteOwner = (req, res, next) => {
     const { userId } = req.params;
 
     if (userId != req.user._id) {
-        req.flash("error", "You don't own this note!");
+        req.flash("error", "You don't have permission!");
         return res.redirect(`/${req.user._id}/notes`);
     }
     next();
