@@ -12,9 +12,9 @@
                   <div class="mb-2">
                       <a href="/<%= currentUser._id %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-100">Edit</a>
                   </div>
-                  <!-- <div>
-                      <a href="#" class="card-link btn btn-danger w-100">Delete</a> 
-                  </div> -->
+                  <form action="/<%= userId %>/notes/<%= note._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger w-100">Delete</button> 
+                  </form>
                 </div>
             </div>
         </div>
