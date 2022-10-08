@@ -1,0 +1,20 @@
+<%- layout('layouts/boilerplate.ejs') %>
+
+<h1 class="text-center">Update Note</h1>
+<div class="col-md-6 offset-md-3">
+    <form action="/<%= userId %>/notes/<%= note._id %>?_method=PUT" method="POST" novalidate class="validated-form">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="notes[title]" class="form-control" value="<%= note.title %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="text" class="form-label">Note Text</label>
+            <textarea type="text" id="text" name="notes[text]" class="form-control" required rows="5"><%= note.text %></textarea>
+        </div>
+        <div class="mb-3 text-center">
+            <button class="btn btn-success" type="submit">Update</button>
+            <a href="/<%= userId %>/notes" class="btn btn-primary">Back</a>
+        </div>
+    </form>
+    
+</div>
