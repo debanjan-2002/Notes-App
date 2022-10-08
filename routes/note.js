@@ -8,7 +8,7 @@ const notes = require("../controllers/notes");
 
 router
     .route("/")
-    .get(isLoggedIn, catchAsync(notes.getNotes))
+    .get(isLoggedIn, isNoteOwner, catchAsync(notes.getNotes))
     .post(isLoggedIn, validateNote, catchAsync(notes.postNote));
 
 router.get("/new", isLoggedIn, notes.renderNewNote);
@@ -20,6 +20,9 @@ router.get(
     catchAsync(notes.renderEditForm)
 );
 
-router.put("/:noteId", isLoggedIn, isNoteOwner, catchAsync(notes.updateForm));
+router
+    .route("/:noteId")
+    .put(isLoggedIn, isNoteOwner, catchAsync(notes.updateForm))
+    .delete(isLoggedIn, isNoteOwner, catchAsync(notes.deleteNote));
 
 module.exports = router;
