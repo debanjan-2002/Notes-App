@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const engine = require("ejs-mate");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -29,6 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", engine);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
 const sessionConfig = {
     secret: "thisisnotasecret",
@@ -66,10 +68,6 @@ app.get("/", (req, res) => {
 
 app.use("/", userRoutes);
 app.use("/:userId/notes", noteRoutes);
-
-app.get("/:userId/notes/:noteId/edit", (req, res) => {
-    res.send("Edit Page!");
-});
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page not found!", 404));
