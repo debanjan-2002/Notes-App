@@ -14,7 +14,7 @@ module.exports.register = async (req, res, next) => {
                 return next(err);
             }
             req.flash("success", `Welcome ${req.user.username}!`);
-            res.redirect("/");
+            res.redirect(`/${registeredUser._id}/notes`);
         });
     } catch (e) {
         req.flash("error", e.message);
