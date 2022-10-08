@@ -38,11 +38,11 @@ module.exports.renderEditForm = async (req, res) => {
     res.render("notes/edit", { note, userId });
 };
 
-module.exports.updateForm = async (req, res) => {
+module.exports.updateNote = async (req, res) => {
     const { noteId, userId } = req.params;
     const updatedNote = await Note.findByIdAndUpdate(
         noteId,
-        { ...req.body.notes },
+        { ...req.body.notes, lastModified: new Date().toLocaleString() },
         { runValidators: true, new: true }
     );
     res.redirect(`/${userId}/notes`);
