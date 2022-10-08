@@ -18,9 +18,4 @@ const noteSchema = new Schema({
     }
 });
 
-noteSchema.pre("save", async function (req, res, next) {
-    this.lastModified = new Date().toLocaleString();
-    await next();
-});
-
 module.exports = mongoose.model("Note", noteSchema);
