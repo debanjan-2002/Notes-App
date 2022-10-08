@@ -22,7 +22,7 @@ router.get(
 
 router
     .route("/:noteId")
-    .put(isLoggedIn, isNoteOwner, catchAsync(notes.updateForm))
+    .put(isLoggedIn, isNoteOwner, catchAsync(notes.updateNote))
     .delete(isLoggedIn, isNoteOwner, catchAsync(notes.deleteNote));
 
 module.exports = router;
