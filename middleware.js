@@ -20,3 +20,13 @@ module.exports.validateNote = (req, res, next) => {
         next();
     }
 };
+
+module.exports.isNoteOwner = (req, res, next) => {
+    const { userId } = req.params;
+
+    if (userId != req.user._id) {
+        req.flash("error", "You don't own this note!");
+        return res.redirect(`/${req.user._id}/notes`);
+    }
+    next();
+};
