@@ -31,3 +31,19 @@ module.exports.renderNewNote = (req, res) => {
     const { userId } = req.params;
     res.render("notes/new", { userId });
 };
+
+module.exports.renderEditForm = async (req, res) => {
+    const { userId, noteId } = req.params;
+    const note = await Note.findById(noteId);
+    res.render("notes/edit", { note, userId });
+};
+
+module.exports.updateForm = async (req, res) => {
+    const { noteId, userId } = req.params;
+    const updatedNote = await Note.findByIdAndUpdate(
+        noteId,
+        { ...req.body.notes },
+        { runValidators: true, new: true }
+    );
+    res.redirect(`/${userId}/notes`);
+};
