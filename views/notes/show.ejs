@@ -12,9 +12,11 @@
     <% for(let note of user.notes) { %>
         <div class="col-auto">
             <div class="card" style="width: 18rem; min-height: 15rem;">
+                <div class="card-header">
+                    <h5 class="card-title"><%= note.title %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted fst-italic"><%= note.lastModified %></h6>
+                </div>
                 <div class="card-body">
-                  <h5 class="card-title"><%= note.title %> </h5>
-                  <h6 class="card-subtitle mb-2 text-muted fst-italic"><%= note.lastModified %> </h6>
                   <p class="card-text" style="white-space: pre-line"><%= note.text %></p>
                   <div class="mb-2 text-center">
                       <a href="/<%= currentUser._id %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-50">Edit</a>
