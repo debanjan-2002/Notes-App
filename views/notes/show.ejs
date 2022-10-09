@@ -1,19 +1,26 @@
 <%- layout('layouts/boilerplate.ejs') %>
 
 <h1 class="text-center">Your Notes</h1> 
+<h5 class="text-center text-muted">
+    <% if(user.notes.length) { %> 
+        [Notes count: <%= user.notes.length %>]
+    <% } else { %>
+        [No notes to show]
+    <% } %>  
+</h5>
 <div class="row justify-content-center gy-3 gx-3 mt-2">
     <% for(let note of user.notes) { %>
         <div class="col-auto">
             <div class="card" style="width: 18rem; min-height: 15rem;">
                 <div class="card-body">
                   <h5 class="card-title"><%= note.title %> </h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><%= note.lastModified %> </h6>
+                  <h6 class="card-subtitle mb-2 text-muted fst-italic"><%= note.lastModified %> </h6>
                   <p class="card-text" style="white-space: pre-line"><%= note.text %></p>
-                  <div class="mb-2">
-                      <a href="/<%= currentUser._id %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-100">Edit</a>
+                  <div class="mb-2 text-center">
+                      <a href="/<%= currentUser._id %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-50">Edit</a>
                   </div>
-                  <form action="/<%= userId %>/notes/<%= note._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger w-100">Delete</button> 
+                  <form action="/<%= userId %>/notes/<%= note._id %>?_method=DELETE" method="POST" class="text-center">
+                    <button class="btn btn-danger w-50">Delete</button> 
                   </form>
                 </div>
             </div>
