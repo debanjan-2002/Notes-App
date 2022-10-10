@@ -6,6 +6,12 @@ const mongoose = require("mongoose");
 module.exports.getNotes = async (req, res) => {
     const { userId } = req.params;
     if (mongoose.Types.ObjectId.isValid(userId)) {
+        /* 
+        const user = await User.findById(userId).populate({
+            path: "notes",
+            options: { limit: 1 }
+        }); 
+        */
         const user = await User.findById(userId).populate("notes");
         res.render("notes/show", { user, userId });
     } else {
