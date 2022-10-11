@@ -14,7 +14,7 @@
             <div class="card" style="width: 18rem; min-height: 15rem;">
                 <div class="card-header">
                     <h5 class="card-title"><%= note.title %></h5>
-                    <h6 class="card-subtitle mb-2 text-muted fst-italic"><%= note.lastModified %></h6>
+                    <h6 class="card-subtitle mb-2 text-muted fst-italic"><%= note.lastModified.toLocaleString() %></h6>
                 </div>
                 <div class="card-body">
                   <p class="card-text" style="white-space: pre-line"><%= note.text %></p>
