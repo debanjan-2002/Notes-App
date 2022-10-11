@@ -11,10 +11,8 @@ const noteSchema = new Schema({
         required: true
     },
     lastModified: {
-        type: String,
-        default: () => {
-            return new Date().toLocaleString();
-        }
+        type: Date,
+        default: () => Date.now()
     }
 });
 

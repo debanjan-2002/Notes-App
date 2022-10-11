@@ -50,7 +50,7 @@ module.exports.updateNote = async (req, res) => {
     const { noteId, userId } = req.params;
     const updatedNote = await Note.findByIdAndUpdate(
         noteId,
-        { ...req.body.notes, lastModified: new Date().toLocaleString() },
+        { ...req.body.notes, lastModified: Date.now() },
         { runValidators: true, new: true }
     );
     res.redirect(`/${userId}/notes`);
