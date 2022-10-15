@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 
 module.exports.getNotes = async (req, res) => {
     const { userId } = req.params;
+    const { sort } = req.query;
+
     if (mongoose.Types.ObjectId.isValid(userId)) {
         /*
         const user = await User.findById(userId).populate({
@@ -14,7 +16,24 @@ module.exports.getNotes = async (req, res) => {
             select: "title"
         });
         */
-        const user = await User.findById(userId).populate("notes");
+        const user = await User.findById(userId);
+        if (sort) {
+            if (sort === "new") {
+                await user.populate({
+                    path: "notes",
+                    options: { sort: { lastModified: -1 } }
+                });
+            } else if (sort === "old") {
+                await user.populate({
+                    path: "notes",
+                    options: { sort: { lastModified: 1 } }
+                });
+            } else {
+                await user.populate("notes");
+            }
+            return res.render("notes/show", { user, userId });
+        }
+        await user.populate("notes");
         res.render("notes/show", { user, userId });
     } else {
         req.logout(err => {
