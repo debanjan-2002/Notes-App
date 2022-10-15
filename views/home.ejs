@@ -27,6 +27,9 @@
         <main class="px-3">
             <h1>Notes App</h1>
             <p class="lead">Acquiring the habit of note-taking is therefore a wondefully complementary skill to that of listening.</p>
+            <% if(currentUser) { %> 
+                <a href="/<%= currentUser._id %>/notes" class="btn btn-lg btn-dark">View Your Notes</a>
+            <% } %> 
         </main>
         <footer class="mt-auto text-white-50 d-flex justify-content-center">
             <p class="px-2 py-2">&copy; Notes App 2022</p>
