@@ -1,24 +1,30 @@
 <%- layout('layouts/boilerplate.ejs') %>
 
 <h1 class="text-center">Your Notes</h1> 
-<h5 class="text-center text-muted">
+<div class="d-flex justify-content-center align-items-center gap-3">
+    <h5 class="text-center">
+        <% if(user.notes.length) { %> 
+            <span>(Notes count: <%= user.notes.length %>)</span>
+        <% } else { %>
+            <span>(No notes to show)</span>
+        <% } %>  
+    </h5>
     <% if(user.notes.length) { %> 
-        (Notes count: <%= user.notes.length %>)
-    <% } else { %>
-        (No notes to show)
-    <% } %>  
-</h5>
+        <div class="dropdown text-center">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort
+            </button>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/<%= currentUser._id %>/notes?sort=new">Most Recent</a></li>
+            <li><a class="dropdown-item" href="/<%= currentUser._id %>/notes?sort=old">Least Recent</a></li>
+            </ul>
+        </div>
+    <% } %> 
+</div>
+
 
 <div class="row justify-content-center gy-3 gx-3 mt-2">
-    <div class="dropdown text-center">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Sort
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/<%= currentUser._id %>/notes?sort=new">Most Recent</a></li>
-          <li><a class="dropdown-item" href="/<%= currentUser._id %>/notes?sort=old">Least Recent</a></li>
-        </ul>
-    </div>
+
     <% for(let note of user.notes) { %>
         <div class="col-auto">
             <div class="card" style="width: 18rem; min-height: 15rem;">
@@ -26,7 +32,7 @@
                     <h5 class="card-title"><%= note.title %></h5>
                     <h6 class="card-subtitle mb-2 text-muted fst-italic">Updated: <%= note.lastModified.toLocaleString() %></h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body text-bg-dark" style="border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
                   <p class="card-text" style="white-space: pre-line"><%= note.text %></p>
                   <div class="mb-2 text-center">
                       <a href="/<%= currentUser._id %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-50">Edit</a>
