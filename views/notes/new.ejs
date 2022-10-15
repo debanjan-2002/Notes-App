@@ -3,13 +3,13 @@
 <h1 class="text-center">Add Note</h1>
 <div class="col-md-6 offset-md-3">
     <form action="/<%= userId %>/notes" method="POST" novalidate class="validated-form">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" id="title" name="notes[title]" class="form-control" required>
+        <div class="form-floating mb-3">
+            <input type="text" id="title" name="notes[title]" class="form-control" placeholder="title" required autofocus>
+            <label for="title" class="form-label text-muted">Title</label>
         </div>
-        <div class="mb-3">
-            <label for="text" class="form-label">Note Text</label>
-            <textarea type="text" id="text" name="notes[text]" class="form-control" required rows="5"></textarea>
+        <div class="form-floating mb-3">
+            <textarea type="text" id="text" name="notes[text]" class="form-control" required placeholder="text" style="min-height: 200px;"></textarea>
+            <label for="text" class="form-label text-muted">Note Text</label>
         </div>
         <div class="mb-3 text-center">
             <button class="btn btn-success" type="submit">Add</button>

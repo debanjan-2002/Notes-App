@@ -3,13 +3,13 @@
 <h1 class="text-center">Update Note</h1>
 <div class="col-md-6 offset-md-3">
     <form action="/<%= userId %>/notes/<%= note._id %>?_method=PUT" method="POST" novalidate class="validated-form">
-        <div class="mb-3">
+        <div class="form-floating mb-3">
+            <input type="text" id="title" name="notes[title]" class="form-control" value="<%= note.title %>" required placeholder="title">
             <label for="title" class="form-label">Title</label>
-            <input type="text" id="title" name="notes[title]" class="form-control" value="<%= note.title %>" required>
         </div>
-        <div class="mb-3">
+        <div class="form-floating mb-3">
+            <textarea type="text" id="text" name="notes[text]" class="form-control" required style="height: 200px;" placeholder="text"><%= note.text %></textarea>
             <label for="text" class="form-label">Note Text</label>
-            <textarea type="text" id="text" name="notes[text]" class="form-control" required rows="5"><%= note.text %></textarea>
         </div>
         <div class="mb-3 text-center">
             <button class="btn btn-success" type="submit">Update</button>
