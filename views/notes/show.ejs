@@ -22,12 +22,9 @@
     <% } %> 
 </div>
 
-
-<div class="row justify-content-center gy-3 gx-3 mt-2">
-
+<div class="grid mt-4 mx-auto">
     <% for(let note of user.notes) { %>
-        <div class="col-auto">
-            <div class="card" style="width: 18rem; min-height: 15rem;">
+            <div class="card" style="width: 18rem; margin-bottom: 0.7rem;">
                 <div class="card-header">
                     <h5 class="card-title"><%= note.title %></h5>
                     <h6 class="card-subtitle mb-2 text-muted fst-italic">Updated: <%= note.lastModified.toLocaleString() %></h6>
@@ -42,6 +39,8 @@
                   </form>
                 </div>
             </div>
-        </div>
     <% } %>  
 </div>
+
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script src="/javascript/masonry.js"></script>
