@@ -24,7 +24,7 @@
 
 <div class="grid mt-4 mx-auto">
     <% for(let note of user.notes) { %>
-            <div class="card" style="width: 18rem; margin-bottom: 0.7rem;">
+            <div class="card" style="width: 18rem; margin-bottom: 0.7rem; border: none;">
                 <div class="card-header">
                     <h5 class="card-title"><%= note.title %></h5>
                     <h6 class="card-subtitle mb-2 text-muted fst-italic">Updated: <%= note.lastModified.toLocaleString() %></h6>
