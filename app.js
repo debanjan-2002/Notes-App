@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
 const express = require("express");
 const path = require("path");
 const engine = require("ejs-mate");
@@ -5,6 +9,7 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 
 const ExpressError = require("./utils/ExpressError");
@@ -19,8 +24,10 @@ const LocalStrategy = require("passport-local");
 
 const User = require("./models/users");
 
+const dbURL = process.env.DB_URL || "mongodb://localhost:27017/notes-app";
+
 mongoose
-    .connect("mongodb://localhost:27017/notes-app")
+    .connect(dbURL)
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.log("Error connecting to MongoDB: " + err.message));
 
@@ -32,8 +39,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
+const secret = process.env.SECRET || "thisisnotasecret";
+
+const store = new MongoStore({
+    mongoUrl: dbURL,
+    crypto: { secret },
+    touchAfter: 24 * 60 * 60
+});
+
 const sessionConfig = {
-    secret: "thisisnotasecret",
+    store,
+    secret,
     resave: false,
     name: "session-config",
     saveUninitialized: true,
@@ -55,7 +71,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    // console.log(req.user);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
