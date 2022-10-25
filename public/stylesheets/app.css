@@ -14,3 +14,15 @@ input[type="text"],
 textarea[type="text"] {
     border: 1px solid rgb(150, 150, 150);
 }
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(41, 40, 40);
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.4em 0;
+    z-index: 200;
+    text-align: center;
+}
