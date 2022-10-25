@@ -1,5 +1,6 @@
 const User = require("../models/users");
 const transporter = require("../nodemailer");
+const { v4: uuid4 } = require("uuid");
 
 module.exports.renderRegister = (req, res) => {
     res.render("users/register");
@@ -8,39 +9,94 @@ module.exports.renderRegister = (req, res) => {
 module.exports.register = async (req, res, next) => {
     try {
         const { username, password, email } = req.body;
-        const user = new User({ email, username });
-        const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-            if (err) {
-                return next(err);
-            }
-            req.flash("success", `Welcome ${req.user.username}!`);
-            res.redirect(`/${registeredUser._id}/notes`);
+        const user = new User({
+            email,
+            username,
+            emailToken: uuid4(),
+            isVerified: false
         });
-        // Email sending
-        try {
-            const mailDetails = {
-                from: `Notes app <${process.env.AUTH_EMAIL}>`,
-                to: email,
-                subject: `Welcome to Notes App!`,
-                text: "Thank You!",
-                html: `
-                <h3>Thank You for registering</h3>
+        await User.register(user, password);
+
+        const mailDetails = {
+            from: `Notes app <${process.env.AUTH_EMAIL}>`,
+            to: email,
+            subject: `Welcome to Notes App!`,
+            text: `
+                Thank you for registering on Notes App.
+                Dear ${username},
+                I am reaching out to thank you for registering to Notes App.
+                Please copy and paste the address below to verify your account.
+                http://${req.headers.host}/verify-email?token=${user.emailToken}
+                Enjoy creating and storing notes :)
+                Debanjan Poddar
+                Notes App
+            `,
+            html: `
+                <h3>Thank You for registering on Notes App.</h3>
                 <h3>Dear ${username},</h3>
-                <p>I am reaching out to thank you for registering to Notes App </p>
+                <p>I am reaching out to thank you for registering to Notes App.</p>
+                <p>Please click the link below to verify your account.</p>
+                <a href="http://${req.headers.host}/verify-email?token=${user.emailToken}">Verify your account</a>
                 <p>Enjoy creating and storing notes :)</p>
                 <hr>
-                <p style="font-weight: bold;">Yours Faithfully</p>
-                <p style="font-weight: bold;">Debanjan Poddar (Notes App)</p> 
-                `,
-                replyTo: process.env.AUTH_EMAIL
-            };
+                <p style="font-weight: bold;">Debanjan Poddar</p> 
+                <p style="font-weight: bold;">Notes App</p>
+            `,
+            replyTo: process.env.AUTH_EMAIL
+        };
+
+        try {
             await transporter.sendMail(mailDetails);
+            req.flash(
+                "success",
+                "Thank you for registering! Please check your email to verify your account"
+            );
+            res.redirect("/register");
         } catch (e) {
             console.log(e.message);
+            await User.findOneAndDelete({ username });
+
+            req.flash(
+                "error",
+                "Something went wrong. Please contact us for assistance"
+            );
+            res.redirect("/register");
         }
     } catch (e) {
         req.flash("error", e.message);
+        res.redirect("/register");
+    }
+};
+
+module.exports.verify = async (req, res) => {
+    const { token } = req.query;
+    try {
+        const user = await User.findOne({ emailToken: token });
+        if (!user) {
+            req.flash(
+                "error",
+                "Token is invalid! Please contact us for assistance"
+            );
+            return res.redirect("/register");
+        }
+        user.emailToken = null;
+        user.isVerified = true;
+        await user.save();
+        await req.login(user, err => {
+            if (err) {
+                return next(err);
+            }
+            req.flash(
+                "success",
+                `Account verified successfully! Welcome ${req.user.username}!`
+            );
+            res.redirect(`/${user._id}/notes`);
+        });
+    } catch (e) {
+        req.flash(
+            "error",
+            "Something went wrong. Please contact us for assistance"
+        );
         res.redirect("/register");
     }
 };
