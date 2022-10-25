@@ -8,6 +8,8 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    emailToken: String,
+    isVerified: Boolean,
     notes: [
         {
             type: Schema.Types.ObjectId,
