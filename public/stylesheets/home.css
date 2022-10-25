@@ -68,8 +68,6 @@ nav {
     display: block;
     height: 70%;
 }
-.nav-links li.active {
-}
 .nav-links li.active a {
     color: white;
     border-bottom: 4px solid rgb(194, 194, 194);
@@ -120,7 +118,6 @@ main a {
 #footer span {
     color: red;
 }
-
 @media (max-width: 768px) {
     .nav-title {
         text-align: center;
