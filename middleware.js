@@ -1,5 +1,6 @@
 const { noteSchema } = require("./schemas");
 const ExpressError = require("./utils/ExpressError");
+const User = require("./models/users");
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -29,4 +30,26 @@ module.exports.isNoteOwner = (req, res, next) => {
         return res.redirect(`/${req.user._id}/notes`);
     }
     next();
+};
+
+module.exports.isUserVerified = async (req, res, next) => {
+    try {
+        const { username } = req.body;
+        const user = await User.findOne({ username });
+
+        if (!user || user.isVerified) {
+            return next();
+        }
+        req.flash(
+            "error",
+            "Your account has not been verified yet! Please check your email to verify your account"
+        );
+        res.redirect("/login");
+    } catch (e) {
+        req.flash(
+            "error",
+            "Something went wrong. Please contact us for assistance"
+        );
+        res.redirect("/login");
+    }
 };
