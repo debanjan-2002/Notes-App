@@ -1,3 +1,13 @@
+::-webkit-scrollbar {
+    max-width: 3vw;
+}
+::-webkit-scrollbar-track {
+    background-color: #333;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 97, 97);
+}
+
 body {
     background-image: linear-gradient(
             rgba(255, 255, 255, 0.7),
