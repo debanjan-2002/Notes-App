@@ -12,7 +12,7 @@ module.exports.register = async (req, res, next) => {
         const user = new User({
             email,
             username,
-            emailToken: uuid4(),
+            token: uuid4(),
             isVerified: false
         });
         await User.register(user, password);
@@ -26,7 +26,7 @@ module.exports.register = async (req, res, next) => {
                 Dear ${username},
                 I am reaching out to thank you for registering to Notes App.
                 Please copy and paste the address below to verify your account.
-                http://${req.headers.host}/verify-email?token=${user.emailToken}
+                http://${req.headers.host}/verify-email?token=${user.token}
                 Enjoy creating and storing notes :)
                 Debanjan Poddar
                 Notes App
@@ -36,7 +36,7 @@ module.exports.register = async (req, res, next) => {
                 <h3>Dear ${username},</h3>
                 <p>I am reaching out to thank you for registering to Notes App.</p>
                 <p>Please click the link below to verify your account.</p>
-                <a href="http://${req.headers.host}/verify-email?token=${user.emailToken}">Verify your account</a>
+                <a href="http://${req.headers.host}/verify-email?token=${user.token}">Verify your account</a>
                 <p>Enjoy creating and storing notes :)</p>
                 <hr>
                 <p style="font-weight: bold;">Debanjan Poddar</p> 
@@ -71,7 +71,7 @@ module.exports.register = async (req, res, next) => {
 module.exports.verify = async (req, res) => {
     const { token } = req.query;
     try {
-        const user = await User.findOne({ emailToken: token });
+        const user = await User.findOne({ token });
         if (!user) {
             req.flash(
                 "error",
@@ -79,7 +79,7 @@ module.exports.verify = async (req, res) => {
             );
             return res.redirect("/register");
         }
-        user.emailToken = null;
+        user.token = null;
         user.isVerified = true;
         await user.save();
         await req.login(user, err => {

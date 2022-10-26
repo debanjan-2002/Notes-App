@@ -8,7 +8,7 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    emailToken: String,
+    token: String,
     isVerified: Boolean,
     notes: [
         {
