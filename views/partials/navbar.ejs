@@ -14,9 +14,19 @@
               <a class="nav-link" href="/<%= currentUser._id %>/notes/new">Add Notes</a>
             </li>
           <% } %> 
+          <% if(currentUser) { %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Account Settings (@<%= currentUser.username %>)</a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/<%= currentUser._id %>/change-password">Change Password</a></li>
+                <!-- <li><a class="dropdown-item" href="#">Delete Account</a></li> -->
+                <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+              </ul>
+            </li>
+          <% } %> 
         </ul>
         <ul class="navbar-nav ms-auto">
-            <ul class="navbar-nav">
+          <ul class="navbar-nav">
               <% if(!currentUser) { %> 
                 <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="/login">Login</a>
@@ -29,8 +39,8 @@
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
               <% } %> 
-              </ul>
           </ul>
+        </ul>
       </div>
     </div>
 </nav>
