@@ -5,7 +5,7 @@ const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 
 const users = require("../controllers/users");
-const { isUserVerified } = require("../middleware");
+const { isUserVerified, isLoggedIn, isOwner } = require("../middleware");
 
 router
     .route("/login")
@@ -28,5 +28,10 @@ router
 router.get("/logout", users.logout);
 
 router.get("/verify-email", catchAsync(users.verify));
+
+router
+    .route("/:userId/change-password")
+    .get(isLoggedIn, isOwner, users.renderChangePassword)
+    .post(isLoggedIn, isOwner, catchAsync(users.changePassword));
 
 module.exports = router;
