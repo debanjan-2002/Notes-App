@@ -120,3 +120,22 @@ module.exports.logout = (req, res, next) => {
         res.redirect("/");
     });
 };
+
+module.exports.renderChangePassword = (req, res) => {
+    const { userId } = req.params;
+    res.render("users/forget", { userId });
+};
+
+module.exports.changePassword = async (req, res) => {
+    const { userId } = req.params;
+    const { oldPassword, newPassword } = req.body;
+    try {
+        const user = await User.findById(userId);
+        await user.changePassword(oldPassword, newPassword);
+        req.flash("success", "Password changed successfully!");
+        res.redirect(`/${userId}/notes`);
+    } catch (e) {
+        req.flash("error", "Old password is incorrect!");
+        res.redirect(`/${userId}/change-password`);
+    }
+};
