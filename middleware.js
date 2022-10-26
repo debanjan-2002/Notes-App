@@ -22,11 +22,11 @@ module.exports.validateNote = (req, res, next) => {
     }
 };
 
-module.exports.isNoteOwner = (req, res, next) => {
+module.exports.isOwner = (req, res, next) => {
     const { userId } = req.params;
 
     if (userId != req.user._id) {
-        req.flash("error", "You don't have permission!");
+        req.flash("error", "You don't have permission to view this page!");
         return res.redirect(`/${req.user._id}/notes`);
     }
     next();
