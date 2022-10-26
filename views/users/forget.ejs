@@ -1,0 +1,19 @@
+<% layout("layouts/boilerplate") %> 
+
+<h1 class="text-center">Change Password</h1>
+<div class="col-md-6 offset-md-3">
+    <form action="/<%= userId %>/change-password" method="POST" novalidate class="validated-form">
+        <div class="form-floating mb-3">
+            <input type="password" id="oldPassword" name="oldPassword" class="form-control" placeholder="oldPassword" required autofocus>
+            <label for="oldPassword" class="form-label text-muted">Old Password</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="newPassword" required autofocus>
+            <label for="newPassword" class="form-label text-muted">New Password</label>
+        </div>
+        <div class="mb-3 text-center">
+            <button class="btn btn-success" type="submit">Change Password</button>
+            <a href="/<%= userId %>/notes" class="btn btn-primary">Cancel</a>
+        </div>
+    </form>
+</div>
