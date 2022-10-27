@@ -139,3 +139,18 @@ module.exports.changePassword = async (req, res) => {
         res.redirect(`/${userId}/change-password`);
     }
 };
+
+module.exports.deleteAccount = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        await User.findByIdAndDelete(userId);
+        req.flash("success", "Account deleted successfully");
+        res.redirect("/login");
+    } catch (e) {
+        req.flash(
+            "error",
+            "Something went wrong. Please contact us for assistance"
+        );
+        res.redirect(`/${userId}/notes`);
+    }
+};
