@@ -6,6 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 
 const users = require("../controllers/users");
 const { isUserVerified, isLoggedIn, isOwner } = require("../middleware");
+const { Router } = require("express");
 
 router
     .route("/login")
@@ -33,5 +34,7 @@ router
     .route("/:userId/change-password")
     .get(isLoggedIn, isOwner, users.renderChangePassword)
     .post(isLoggedIn, isOwner, catchAsync(users.changePassword));
+
+router.delete("/:userId", catchAsync(users.deleteAccount));
 
 module.exports = router;
