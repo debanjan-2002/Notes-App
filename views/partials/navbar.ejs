@@ -19,7 +19,9 @@
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Account Settings (@<%= currentUser.username %>)</a>
               <ul class="dropdown-menu dropdown-menu-dark">
                 <li><a class="dropdown-item" href="/<%= currentUser._id %>/change-password">Change Password</a></li>
-                <!-- <li><a class="dropdown-item" href="#">Delete Account</a></li> -->
+                <form action="/<%= currentUser._id %>?_method=DELETE" method="POST">
+                  <li><button class="dropdown-item" type="submit">Delete Account</button></li>
+                </form>
                 <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
               </ul>
             </li>
