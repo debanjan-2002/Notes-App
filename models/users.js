@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const passportLocalMongoose = require("passport-local-mongoose");
+const Note = require("./notes");
 
 const userSchema = new Schema({
     email: {
@@ -16,6 +17,14 @@ const userSchema = new Schema({
             ref: "Note"
         }
     ]
+});
+
+userSchema.post("findOneAndDelete", async doc => {
+    if (doc) {
+        await Note.deleteMany({
+            _id: { $in: doc.notes }
+        });
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);
