@@ -1,3 +1,6 @@
+html {
+    overflow-y: scroll;
+}
 ::-webkit-scrollbar {
     max-width: 3vw;
 }
