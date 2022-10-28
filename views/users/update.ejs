@@ -1,0 +1,17 @@
+<% layout("layouts/boilerplate") %> 
+
+<h1 class="text-center mb-4">Retrieve Account</h1>
+<div class="col-md-6 offset-md-3">
+    <form action="/update-password" method="POST" novalidate class="validated-form">
+        <div class="mb-3">
+            <input type="email" id="email" name="email" class="form-control py-3" value="<%= user.email %>" readonly>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="newPassword" required autofocus>
+            <label for="newPassword" class="form-label text-muted">New Password</label>
+        </div>
+        <div class="mb-3 text-center">
+            <button class="btn btn-success" type="submit">Update Password</button>
+        </div>
+    </form>
+</div>
