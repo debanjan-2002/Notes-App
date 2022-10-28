@@ -12,6 +12,13 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
 };
 
+module.exports.isNotLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return res.redirect(`/${req.user._id}/notes`);
+    }
+    next();
+};
+
 module.exports.validateNote = (req, res, next) => {
     const { error } = noteSchema.validate(req.body);
     if (error) {
