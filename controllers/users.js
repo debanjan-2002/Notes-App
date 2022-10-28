@@ -123,7 +123,7 @@ module.exports.logout = (req, res, next) => {
 
 module.exports.renderChangePassword = (req, res) => {
     const { userId } = req.params;
-    res.render("users/forget", { userId });
+    res.render("users/reset", { userId });
 };
 
 module.exports.changePassword = async (req, res) => {
