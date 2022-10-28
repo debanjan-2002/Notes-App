@@ -14,6 +14,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 module.exports.isNotLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
+        req.flash("error", "You are already signed in!");
         return res.redirect(`/${req.user._id}/notes`);
     }
     next();
