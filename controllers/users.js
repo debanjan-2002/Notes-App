@@ -26,7 +26,7 @@ module.exports.register = async (req, res, next) => {
                 Dear ${username},
                 We are reaching out to thank you for registering to Notes App.
                 Please copy and paste the address below to verify your account.
-                http://${req.headers.host}/verify-email?token=${user.token}
+                https://${req.headers.host}/verify-email?token=${user.token}
                 Enjoy creating and storing notes :)
                 Debanjan Poddar
                 Notes App
@@ -36,7 +36,7 @@ module.exports.register = async (req, res, next) => {
                 <h3>Dear ${username},</h3>
                 <p>We are reaching out to thank you for registering to Notes App.</p>
                 <p>Please click the link below to verify your account.</p>
-                <a href="http://${req.headers.host}/verify-email?token=${user.token}">Verify your account</a>
+                <a href="https://${req.headers.host}/verify-email?token=${user.token}">Verify your account</a>
                 <p>Enjoy creating and storing notes :)</p>
                 <hr>
                 <p style="font-weight: bold;">Debanjan Poddar</p> 
@@ -179,7 +179,7 @@ module.exports.forgetPassword = async (req, res) => {
                 Dear ${user.username},
                 We have received a request to reset the password of your account in Notes App.
                 Please copy and paste the address below to reset your password.
-                http://${req.headers.host}/update-password?token=${user.token}
+                https://${req.headers.host}/update-password?token=${user.token}
                 Debanjan Poddar
                 Notes App
             `,
@@ -187,7 +187,7 @@ module.exports.forgetPassword = async (req, res) => {
                 <h3>Dear ${user.username},</h3>
                 <p>We have received a request to reset the password of your account in Notes App.</p>
                 <p>Please click the link below to reset your password.</p>
-                <a href="http://${req.headers.host}/update-password?token=${user.token}">Reset Password</a>
+                <a href="https://${req.headers.host}/update-password?token=${user.token}">Reset Password</a>
                 <hr>
                 <p style="font-weight: bold;">Debanjan Poddar</p> 
                 <p style="font-weight: bold;">Notes App</p>
