@@ -33,7 +33,7 @@ router
 
 router.route("/logout").get(users.logout);
 
-router.get("/verify-email", catchAsync(users.verify));
+router.route("/verify-email").get(catchAsync(users.verifyAccount));
 
 router
     .route("/:userId/change-password")
@@ -53,5 +53,15 @@ router
         isOwner,
         catchAsync(users.deleteAccount)
     );
+
+router
+    .route("/forget-password")
+    .get(isNotLoggedIn, users.renderForgetPassword)
+    .post(isNotLoggedIn, catchAsync(users.forgetPassword));
+
+router
+    .route("/update-password")
+    .get(isNotLoggedIn, catchAsync(users.renderUpdatePassword))
+    .post(isNotLoggedIn, catchAsync(users.updatePassword));
 
 module.exports = router;
