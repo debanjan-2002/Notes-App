@@ -25,7 +25,7 @@ module.exports.register = async (req, res, next) => {
                 Thank you for registering on Notes App.
                 Dear ${username},
                 We are reaching out to thank you for registering to Notes App.
-                Please copy and paste the address below to verify your account.
+                Please copy and paste the address below to verify your account. (Link expires in 10 minutes)
                 https://${req.headers.host}/verify-email?token=${user.token}
                 Enjoy creating and storing notes :)
                 Debanjan Poddar
@@ -35,7 +35,7 @@ module.exports.register = async (req, res, next) => {
                 <h3>Thank You for registering on Notes App.</h3>
                 <h3>Dear ${username},</h3>
                 <p>We are reaching out to thank you for registering to Notes App.</p>
-                <p>Please click the link below to verify your account.</p>
+                <p>Please click the link below to verify your account. (Link expires in 10 minutes)</p>
                 <a href="https://${req.headers.host}/verify-email?token=${user.token}">Verify your account</a>
                 <p>Enjoy creating and storing notes :)</p>
                 <hr>
