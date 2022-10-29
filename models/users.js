@@ -16,8 +16,20 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Note"
         }
-    ]
+    ],
+    expiresAt: {
+        type: Date,
+        default: () => Date.now() + 10 * 60 * 1000
+    }
 });
+
+userSchema.index(
+    { expiresAt: 1 },
+    {
+        expireAfterSeconds: 0,
+        partialFilterExpression: { isVerified: { $eq: false } }
+    }
+);
 
 userSchema.post("findOneAndDelete", async doc => {
     if (doc) {
