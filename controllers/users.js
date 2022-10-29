@@ -75,7 +75,7 @@ module.exports.verifyAccount = async (req, res) => {
         if (!user) {
             req.flash(
                 "error",
-                "Token is invalid! Please contact us for assistance"
+                "Link has expired! Please register again or contact us for assistance"
             );
             return res.redirect("/register");
         }
@@ -225,7 +225,7 @@ module.exports.renderUpdatePassword = async (req, res) => {
         if (!user) {
             req.flash(
                 "error",
-                "Token is invalid! Please contact us for assistance"
+                "Token is invalid/expired! Please contact us for assistance"
             );
             return res.redirect("/login");
         }
