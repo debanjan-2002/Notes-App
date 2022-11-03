@@ -6,7 +6,7 @@ module.exports.renderRegister = (req, res) => {
     res.render("users/register");
 };
 
-module.exports.register = async (req, res, next) => {
+module.exports.register = async (req, res) => {
     try {
         const { username, password, email } = req.body;
         const user = new User({
@@ -88,9 +88,9 @@ module.exports.verifyAccount = async (req, res) => {
             }
             req.flash(
                 "success",
-                `Account verified successfully! Welcome ${req.user.username}!`
+                `Account verified successfully! Welcome ${user.username}!`
             );
-            res.redirect(`/${user._id}/notes`);
+            res.redirect(`/${user.username}/notes`);
         });
     } catch (e) {
         req.flash(
@@ -106,9 +106,9 @@ module.exports.renderLogin = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-    req.flash("success", `Welcome back ${req.user.username}!`);
-    const { _id } = req.user;
-    res.redirect(`/${_id}/notes`);
+    const { username } = req.user;
+    req.flash("success", `Welcome back ${username}!`);
+    res.redirect(`/${username}/notes`);
 };
 
 module.exports.logout = (req, res, next) => {
@@ -122,28 +122,28 @@ module.exports.logout = (req, res, next) => {
 };
 
 module.exports.renderChangePassword = (req, res) => {
-    const { userId } = req.params;
-    res.render("users/reset", { userId });
+    const { username } = req.params;
+    res.render("users/reset", { username });
 };
 
 module.exports.changePassword = async (req, res) => {
-    const { userId } = req.params;
+    const { username } = req.params;
     const { oldPassword, newPassword } = req.body;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findByUsername(username);
         await user.changePassword(oldPassword, newPassword);
         req.flash("success", "Password changed successfully!");
-        res.redirect(`/${userId}/notes`);
+        res.redirect(`/${username}/notes`);
     } catch (e) {
         req.flash("error", "Old password is incorrect!");
-        res.redirect(`/${userId}/change-password`);
+        res.redirect(`/${username}/change-password`);
     }
 };
 
 module.exports.deleteAccount = async (req, res) => {
-    const { userId } = req.params;
+    const { username } = req.params;
     try {
-        await User.findByIdAndDelete(userId);
+        await User.findOneAndDelete({ username });
         req.flash("success", "Account deleted successfully");
         res.redirect("/login");
     } catch (e) {
@@ -151,7 +151,7 @@ module.exports.deleteAccount = async (req, res) => {
             "error",
             "Something went wrong. Please contact us for assistance"
         );
-        res.redirect(`/${userId}/notes`);
+        res.redirect(`/${username}/notes`);
     }
 };
 
@@ -253,9 +253,9 @@ module.exports.updatePassword = async (req, res) => {
             }
             req.flash(
                 "success",
-                `Password reset successful! Welcome ${req.user.username}!`
+                `Password reset successful! Welcome ${user.username}!`
             );
-            res.redirect(`/${user._id}/notes`);
+            res.redirect(`/${user.username}/notes`);
         });
     } catch (e) {
         req.flash(

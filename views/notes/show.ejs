@@ -15,8 +15,8 @@
             Sort
             </button>
             <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/<%= currentUser._id %>/notes?sort=new">Most Recent</a></li>
-                <li><a class="dropdown-item" href="/<%= currentUser._id %>/notes?sort=old">Least Recent</a></li>
+                <li><a class="dropdown-item" href="/<%= currentUser.username %>/notes?sort=new">Most Recent</a></li>
+                <li><a class="dropdown-item" href="/<%= currentUser.username %>/notes?sort=old">Least Recent</a></li>
             </ul>
         </div>
     <% } %> 
@@ -32,9 +32,9 @@
                 <div class="card-body text-bg-dark" style="border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
                   <p class="card-text" style="white-space: pre-line"><%= note.text %></p>
                   <div class="mb-2 text-center">
-                      <a href="/<%= currentUser._id %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-50">Edit</a>
+                      <a href="/<%= currentUser.username %>/notes/<%= note._id %>/edit" class="card-link btn btn-secondary w-50">Edit</a>
                   </div>
-                  <form action="/<%= userId %>/notes/<%= note._id %>?_method=DELETE" method="POST" class="text-center">
+                  <form action="/<%= currentUser.username %>/notes/<%= note._id %>?_method=DELETE" method="POST" class="text-center">
                     <button class="btn btn-danger w-50">Delete</button> 
                   </form>
                 </div>

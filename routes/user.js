@@ -36,7 +36,7 @@ router.route("/logout").get(users.logout);
 router.route("/verify-email").get(catchAsync(users.verifyAccount));
 
 router
-    .route("/:userId/change-password")
+    .route("/:username/change-password")
     .get(isUserVerified, isLoggedIn, isOwner, users.renderChangePassword)
     .post(
         isUserVerified,
@@ -46,7 +46,7 @@ router
     );
 
 router
-    .route("/:userId")
+    .route("/:username")
     .delete(
         isUserVerified,
         isLoggedIn,

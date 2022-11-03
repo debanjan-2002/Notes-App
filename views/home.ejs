@@ -28,7 +28,7 @@
         <p class="lead">Acquiring the habit of note-taking is a wondefully complementary skill to that of listening.</p>
         <% if(currentUser) { %> 
             <div>
-                <a href="/<%= currentUser._id %>/notes" class="btn btn-lg btn-dark">View Your Notes</a>
+                <a href="/<%= currentUser.username %>/notes" class="btn btn-lg btn-dark">View Your Notes</a>
             </div>
         <% } %> 
     </main>

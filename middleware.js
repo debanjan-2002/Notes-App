@@ -15,7 +15,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.isNotLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already signed in!");
-        return res.redirect(`/${req.user._id}/notes`);
+        return res.redirect(`/${req.user.username}/notes`);
     }
     next();
 };
@@ -31,11 +31,11 @@ module.exports.validateNote = (req, res, next) => {
 };
 
 module.exports.isOwner = (req, res, next) => {
-    const { userId } = req.params;
+    const { username } = req.params;
 
-    if (userId != req.user._id) {
+    if (username !== req.user.username) {
         req.flash("error", "You don't have permission to view this page!");
-        return res.redirect(`/${req.user._id}/notes`);
+        return res.redirect(`/${req.user.username}/notes`);
     }
     next();
 };

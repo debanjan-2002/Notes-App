@@ -2,7 +2,7 @@
 
 <h1 class="text-center mb-4">Add Note</h1>
 <div class="col-md-6 offset-md-3">
-    <form action="/<%= userId %>/notes" method="POST" novalidate class="validated-form">
+    <form action="/<%= username %>/notes" method="POST" novalidate class="validated-form">
         <div class="form-floating mb-3">
             <input type="text" id="title" name="notes[title]" class="form-control" placeholder="title" required autofocus>
             <label for="title" class="form-label text-muted">Title</label>
@@ -13,7 +13,7 @@
         </div>
         <div class="mb-3 text-center">
             <button class="btn btn-success" type="submit">Add</button>
-            <a href="/<%= userId %>/notes" class="btn btn-primary">Back</a>
+            <a href="/<%= username %>/notes" class="btn btn-primary">Back</a>
         </div>
     </form>
     

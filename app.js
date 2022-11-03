@@ -82,7 +82,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", userRoutes);
-app.use("/:userId/notes", noteRoutes);
+app.use("/:username/notes", noteRoutes);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page not found!", 404));
