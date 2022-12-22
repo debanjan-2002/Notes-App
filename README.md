@@ -16,7 +16,7 @@
 
 ![new](public/images/screenshots/new.PNG)
 
-![edit](public/images/screenshots/edit.PNG)
+![edit](public/images/screenshots/edit_img.PNG)
 
 ## License
 
